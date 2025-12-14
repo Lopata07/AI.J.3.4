@@ -21,6 +21,11 @@ def call_llm(model_name, messages):
     Возвращает:
     - str: Ответ от модели или сообщение об ошибке
     """
+    # Загрузка API ключа из переменных окружения
+    api_key = os.getenv('API_KEY')
+    if not api_key:
+        return "Ошибка: API ключ не найден в переменных окружения."
+    
     # Подготовка данных для запроса
     data = {
         "model_name": model_name,
@@ -29,7 +34,8 @@ def call_llm(model_name, messages):
     
     # Заголовки для запроса
     headers = {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"  # Добавляем API ключ в заголовки
     }
     
     try:
